@@ -1,0 +1,29 @@
+{
+  "name": "HTTP-Authentication",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smithrm941/HTTP-Authentication.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smithrm941/HTTP-Authentication/issues"
+  },
+  "homepage": "https://github.com/smithrm941/HTTP-Authentication#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-session": "^1.3.0",
+    "ejs": "^2.5.7",
+    "express": "^4.15.3",
+    "nodemon": "^1.11.0",
+    "pg-promise": "^6.3.6"
+  }
+}
