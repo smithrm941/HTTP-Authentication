@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
-const { create } = require('./db/index')
+const { create, findUser } = require('./db/index')
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false}))
@@ -38,6 +38,27 @@ app.post('/signup', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login')
+})
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body
+
+  findUser(email)
+    .then(result => {
+      const match = (result[0].password === password)
+
+      if (!match) return Promise.reject(password)
+
+      return {message: "Success", result}
+    })
+    .then(result => {
+      req.session.id = email
+      res.redirect('/')
+    })
+    .catch(err => {
+      console.log(err);
+      res.redirect('/login')
+    })
 })
 
 app.get('/logout', (req, res) => {
