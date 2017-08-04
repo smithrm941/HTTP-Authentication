@@ -26,7 +26,7 @@ app.post('/signup', (req, res) => {
     res.render('signup', {message: 'Please provide an email and a password to sign up'})
   } else if (password !== passwordConfirmation) {
     res.render('signup', {message: 'Passwords do not match'})
-  } else {
+  } else if (email && password && password === passwordConfirmation){
     create(email, password).then(result => res.redirect('/'))
   }
 })
