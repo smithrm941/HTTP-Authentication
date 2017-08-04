@@ -10,7 +10,7 @@ app.use(cookieSession({
   keys: ['key1', 'key2']
 }));
 
-app.set('view engine', 'ejs')
+app.set('view engine', 'pug')
 
 app.get('/', (req, res) => {
   res.render('index')
