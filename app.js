@@ -13,7 +13,11 @@ app.use(cookieSession({
 app.set('view engine', 'pug')
 
 app.get('/', (req, res) => {
-  res.render('index')
+  if(!req.session.populated){
+    res.render('index')
+  } else if(req.session.populated){
+    res.render('index', {email: req.session.id})
+  }
 })
 
 app.get('/signup', (req, res) => {
@@ -27,6 +31,7 @@ app.post('/signup', (req, res) => {
   } else if (password !== passwordConfirmation) {
     res.render('signup', {message: 'Passwords do not match'})
   } else if (email && password && password === passwordConfirmation){
+    req.session.id = email
     create(email, password).then(result => res.redirect('/'))
   }
 })
