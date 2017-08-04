@@ -40,6 +40,11 @@ app.get('/login', (req, res) => {
   res.render('login')
 })
 
+app.get('/logout', (req, res) => {
+  req.session = null;
+  res.redirect('/')
+})
+
 app.listen(3000, () => {
   console.log('listening on port 3000');
 })
