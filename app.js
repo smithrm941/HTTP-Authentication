@@ -31,8 +31,17 @@ app.post('/signup', (req, res) => {
   } else if (password !== passwordConfirmation) {
     res.render('signup', {message: 'Passwords do not match'})
   } else if (email && password && password === passwordConfirmation){
-    req.session.id = email
-    create(email, password).then(result => res.redirect('/'))
+    findUser(email)
+      .then(result => {
+        const userExists = (result[0].email === email)
+        console.log(userExists)
+        if(userExists) {
+          res.render('signup', {message: 'User already exists.'})
+        } else {
+          req.session.id = email
+          create(email, password).then(result => res.redirect('/'))
+        }
+      })
   }
 })
 
