@@ -21,10 +21,11 @@ app.get('/signup', (req, res) => {
 })
 
 app.post('/signup', (req, res) => {
-  const { email, password } = req.body
+  const { email, password, passwordConfirmation } = req.body
   if(!email || !password){
-    console.log('hi!')
     res.render('signup', {message: 'Please provide an email and a password to sign up'})
+  } else if (password !== passwordConfirmation) {
+    res.render('signup', {message: 'Passwords do not match'})
   } else {
     create(email, password).then(result => res.redirect('/'))
   }
