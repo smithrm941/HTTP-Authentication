@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const bodyParser = require('body-parser')
 const cookieSession = require('cookie-session')
 const { create, findUser } = require('./db/index')
@@ -9,6 +10,7 @@ app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2']
 }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('view engine', 'pug')
 
@@ -34,7 +36,6 @@ app.post('/signup', (req, res) => {
     findUser(email)
       .then(result => {
         const userExists = (result[0].email === email)
-        console.log(userExists)
         if(userExists) {
           res.render('signup', {message: 'User already exists.'})
         } else {
