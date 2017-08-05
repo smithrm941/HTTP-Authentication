@@ -38,10 +38,11 @@ app.post('/signup', (req, res) => {
         const userExists = (result[0].email === email)
         if(userExists) {
           res.render('signup', {message: 'User already exists.'})
-        } else {
-          req.session.id = email
-          create(email, password).then(result => res.redirect('/'))
-        }
+        } 
+      })
+      .catch(err => {
+        req.session.id = email
+        create(email, password).then(result => res.redirect('/'))
       })
   }
 })
@@ -52,14 +53,15 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const { email, password } = req.body
-
+  if(!email || !password){
+    res.render('login', {message: 'Please provide an email and a password to log in.'})
+  }
   findUser(email)
     .then(result => {
       const match = (result[0].password === password)
-
-      if (!match) return Promise.reject(password)
-
-      return {message: "Success", result}
+      if(!match){
+        res.render('login', {message: 'Incorrect email or password.'})
+      }
     })
     .then(result => {
       req.session.id = email
@@ -67,7 +69,7 @@ app.post('/login', (req, res) => {
     })
     .catch(err => {
       console.log(err);
-      res.redirect('/login')
+      res.render('login', {message: 'Incorrect email or password'})
     })
 })
 
