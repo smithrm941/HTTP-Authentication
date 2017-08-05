@@ -1,0 +1,10 @@
+DROP DATABASE IF EXISTS auth;
+CREATE DATABASE auth;
+
+\c auth
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  email VARCHAR(255),
+  password TEXT
+);
